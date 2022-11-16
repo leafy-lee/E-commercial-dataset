@@ -59,7 +59,7 @@ pip install opencv-python==4.4.0.46 termcolor==1.1.0 yacs==0.1.8 pyyaml scipy
 ```
 ### Evaluation
 
-To evaluate a pre-trained `Swin Transformer` on ImageNet val, run:
+To evaluate a trained model, run:
 
 ```bash
-python main.py --eval --cfg <config-file> --resume <checkpoint> --data-path <imagenet-path> 
+python main.py --eval --cfg config --resume ckpt --data-path data_dir 
