@@ -17,7 +17,7 @@ The text detection results are stored in csv file, with the affinity score and r
 
 # SSwin-transformer Model added in Repo
 
-# To-do list
+## To-do list
 1. -[ ] Adding environment setting (you can use environment same as swin-transformer as temporary alternatives)
 2. -[ ] Refine the code into efficient way
 
