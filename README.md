@@ -16,7 +16,7 @@ Fixation maps are saved as *\_fixPts.jpg, while saliency maps are saved as *\_.f
 The text detection results are stored in csv file, with the affinity score and region score.
 
 # SSwin-transformer Model added in Repo
-
+[[![](https://img.shields.io/badge/blog-@champyin-red.svg)]](https://img.shields.io/badge/pytorch-1.8.0-brightgreen)
 ## To-do list
 1. -[ ] Adding environment setting (you can use environment same as swin-transformer as temporary alternatives)
 2. -[ ] Refine the code into efficient way
@@ -54,3 +54,9 @@ pip install timm==0.4.12
 ```bash
 pip install opencv-python==4.4.0.46 termcolor==1.1.0 yacs==0.1.8 pyyaml scipy
 ```
+### Evaluation
+
+To evaluate a pre-trained `Swin Transformer` on ImageNet val, run:
+
+```bash
+python main.py --eval --cfg <config-file> --resume <checkpoint> --data-path <imagenet-path> 
