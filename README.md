@@ -18,7 +18,7 @@ The text detection results are stored in csv file, with the affinity score and r
 # SSwin-transformer Model added in Repo
 [![](https://img.shields.io/badge/pytorch-1.8.0-brightgreen)]()
 [![](https://img.shields.io/badge/CUDA-%E2%89%A510.2-lightgrey)]()
-[![]https://img.shields.io/badge/python-%E2%89%A53.7-orange)]()
+[![](https://img.shields.io/badge/python-%E2%89%A53.7-orange)]()
 ## To-do list
 1. -[ ] Adding environment setting (you can use environment same as swin-transformer as temporary alternatives)
 2. -[ ] Refine the code into efficient way
