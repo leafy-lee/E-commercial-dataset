@@ -14,3 +14,9 @@ Fixation maps are saved as *\_fixPts.jpg, while saliency maps are saved as *\_.f
 ## TEXT REGION
 
 The text detection results are stored in csv file, with the affinity score and region score.
+
+# SSwin-transformer Model added in Repo
+
+# To-do list
+1. -[ ] Adding environment setting (you can use environment same as swin-transformer as temporary alternatives)
+2. -[ ] Refine the code into efficient way
