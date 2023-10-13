@@ -63,6 +63,7 @@ To evaluate a trained model, run:
 
 ```bash
 python main.py --eval --cfg config --resume ckpt --data-path data_dir
+```
 
 ## Citation
 If you use this code, please cite
