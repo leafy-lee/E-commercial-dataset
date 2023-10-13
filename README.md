@@ -62,4 +62,17 @@ pip install opencv-python==4.4.0.46 termcolor==1.1.0 yacs==0.1.8 pyyaml scipy
 To evaluate a trained model, run:
 
 ```bash
-python main.py --eval --cfg config --resume ckpt --data-path data_dir 
+python main.py --eval --cfg config --resume ckpt --data-path data_dir
+
+## Citation
+If you use this code, please cite
+```
+@InProceedings{Jiang_2022_CVPR,
+    author    = {Jiang, Lai and Li, Yifei and Li, Shengxi and Xu, Mai and Lei, Se and Guo, Yichen and Huang, Bo},
+    title     = {Does Text Attract Attention on E-Commerce Images: A Novel Saliency Prediction Dataset and Method},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2022},
+    pages     = {2088-2097}
+}
+```
