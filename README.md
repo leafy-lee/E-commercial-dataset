@@ -20,7 +20,7 @@ The text detection results are stored in csv file, with the affinity score and r
 [![](https://img.shields.io/badge/CUDA-%E2%89%A510.2-lightgrey)]()
 [![](https://img.shields.io/badge/python-%E2%89%A53.7-orange)]()
 ## To-do list
-1. -[ ] Adding environment setting (you can use environment same as swin-transformer as temporary alternatives)
+1. -[x] Adding environment setting (you can use environment same as swin-transformer as temporary alternatives)
 2. -[ ] Refine the code into efficient way
 
 ### Environment preparing
@@ -59,10 +59,20 @@ pip install opencv-python==4.4.0.46 termcolor==1.1.0 yacs==0.1.8 pyyaml scipy
 ```
 ### Evaluation
 
+To train the model, run:
+
+```bash
+python train.py --batch-size 8 --cfg configs/sswin.yaml --data-path DATA/ECdata/ --dataset ecdata --head headname
+```
+
+
+
+### Evaluation
+
 To evaluate a trained model, run:
 
 ```bash
-python main.py --eval --cfg config --resume ckpt --data-path data_dir
+python main.py --eval --cfg config --resume True --finetune ckpt --data-path data_dir
 ```
 
 ## Citation
