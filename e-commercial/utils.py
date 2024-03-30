@@ -70,6 +70,7 @@ def load_checkpoint_eval(config, model, optimizer, logger):
             config.MODEL.FINETUNE, map_location='cpu', check_hash=True)
     else:
         checkpoint = torch.load(config.MODEL.FINETUNE, map_location='cpu')
+    breakpoint()
     msg = model.load_state_dict(checkpoint['model'], strict=False)
     logger.info(msg)
     max_accuracy = 0.0

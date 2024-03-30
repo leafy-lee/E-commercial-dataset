@@ -11,17 +11,20 @@ import numpy as np
 random.seed(1)
 globaltest = []
 
-def ecommercedata(data_path, img_nums, is_train):
+def ecommercedata(data_path, img_nums, is_train, logger):
     global globaltest
     nums = [i for i in range(1, img_nums + 1)]
     if not globaltest:
         globaltest = random.sample(nums, img_nums // 10)
     test = globaltest
+    logger.info(f"now globaltest is {globaltest}")
     train = list(set(nums) - set(test))
     if is_train:
+        print(f"using {(img_nums - (img_nums // 10))} images for train")
         return EcommerceDataset(data_path=data_path, img_nums=(img_nums - (img_nums // 10)),
                                 lis=train)
     else:
+        print(f"using {(img_nums // 10)} images for test")
         return EcommerceDataset(data_path=data_path, img_nums=(img_nums // 10),
                                 lis=test)
 

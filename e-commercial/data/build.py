@@ -18,12 +18,12 @@ from data.saliency_loader import ecommercedata
 from data.saliency_loader import finetunedata, folderimagedata
 
 
-def build_loader(config):
+def build_loader(config, logger):
     config.defrost()
-    dataset_train, config.MODEL.NUM_CLASSES = build_dataset(is_train=True, config=config)
+    dataset_train, config.MODEL.NUM_CLASSES = build_dataset(is_train=True, config=config, logger=logger)
     config.freeze()
     # print(f"local rank {config.LOCAL_RANK} / global rank {dist.get_rank()} successfully build train dataset")
-    # dataset_val, _ = build_dataset(is_train=False, config=config)
+    dataset_val, _ = build_dataset(is_train=False, config=config, logger=logger)
     # print(f"local rank {config.LOCAL_RANK} / global rank {dist.get_rank()} successfully build val dataset")
     '''
     num_tasks = dist.get_world_size()
@@ -46,7 +46,6 @@ def build_loader(config):
         pin_memory=config.DATA.PIN_MEMORY,
         drop_last=True,
     )
-    '''
 
     data_loader_val = torch.utils.data.DataLoader(
         dataset_val,
@@ -55,7 +54,7 @@ def build_loader(config):
         num_workers=config.DATA.NUM_WORKERS,
         pin_memory=config.DATA.PIN_MEMORY,
         drop_last=False
-    )'''
+    )
 
     # setup mixup / cutmix
     mixup_fn = None
@@ -66,14 +65,14 @@ def build_loader(config):
             prob=config.AUG.MIXUP_PROB, switch_prob=config.AUG.MIXUP_SWITCH_PROB, mode=config.AUG.MIXUP_MODE,
             label_smoothing=config.MODEL.LABEL_SMOOTHING, num_classes=config.MODEL.NUM_CLASSES)
 
-    # return dataset_train, dataset_val, data_loader_train, data_loader_val, mixup_fn
-    return dataset_train, data_loader_train, mixup_fn
+    return dataset_train, dataset_val, data_loader_train, data_loader_val, mixup_fn
+    # return dataset_train, data_loader_train, mixup_fn
 
 
-def build_dataset(is_train, config):
+def build_dataset(is_train, config, logger=None):
     transform = build_transform(is_train, config)
     if config.DATA.DATASET == 'ecdata':
-        dataset = ecommercedata(config.DATA.DATA_PATH, config.DATA.DATANUM, is_train)
+        dataset = ecommercedata(config.DATA.DATA_PATH, config.DATA.DATANUM, is_train, logger=logger)
         nb_classes = 1
     elif config.DATA.DATASET == 'finetunedata':
         dataset = finetunedata(config.DATA.DATA_PATH)

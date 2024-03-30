@@ -4,6 +4,7 @@
 
 import os
 import yaml
+import time
 from yacs.config import CfgNode as CN
 
 _C = CN()
@@ -228,7 +229,7 @@ def update_config(config, args):
     # config.LOCAL_RANK = args.local_rank
 
     # output folder
-    config.OUTPUT = os.path.join(config.OUTPUT, config.MODEL.NAME, config.TAG)
+    config.OUTPUT = os.path.join(config.OUTPUT, config.MODEL.NAME + ".".join(str(time.asctime()).split()), config.TAG)
 
     config.freeze()
 

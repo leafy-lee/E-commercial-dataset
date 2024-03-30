@@ -9,7 +9,6 @@ import datetime
 import numpy as np
 import torchvision
 import cv2
-from IPython import embed
 
 # os.environ["CUDA_VISIBLE_DEVICES"] = '0, 2, 4, 7'
 

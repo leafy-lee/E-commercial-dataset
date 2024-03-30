@@ -246,12 +246,10 @@ class WindowAttention(nn.Module):
             attn = self.softmax(attn)
             
         # for test
-        '''
         if need_loss:
             attn_gt = get_saliency_attn(saliency_gt, self.window_size).unsqueeze(1).expand(B_, self.num_heads, N, N)
             # print("attnshape","attn_gt shape", attn.shape, attn_gt.shape)
             attn_loss = cal_attn_loss(attn, attn_gt) / self.num_heads
-        '''
 
 
         attn = self.attn_drop(attn)
@@ -350,7 +348,7 @@ class SwinTransformerBlock(nn.Module):
         
         
         # for test
-        self.require_attn_loss = False
+        # self.require_attn_loss = False
 
 
 
@@ -584,7 +582,7 @@ class BasicLayer(nn.Module):
 
         if self.downsample is not None:
             image = self.downsample(image)
-            # saliency_gt = saliency_merging(saliency_gt)
+            saliency_gt = saliency_merging(saliency_gt)
             # print(saliency_gt.shape, "merging shape")
         ans = ans_attn_loss/cnt if cnt else 0
         return image, saliency_gt, ans
@@ -720,7 +718,6 @@ class SSwinTransformer(nn.Module):
         self.avgpool = nn.AdaptiveAvgPool1d(1)
         # self.head = nn.Linear(self.num_features, num_classes) if num_classes > 0 else nn.Identity()
         self.salhead = define_salD(768, netSalD=head)
-        '''
         self.upconv1 = double_conv(embed_dim * 8, embed_dim * 8, embed_dim * 4)
         self.upconv2 = double_conv(embed_dim * 4, embed_dim * 4, embed_dim * 2)
         self.upconv3 = double_conv(embed_dim * 2, embed_dim * 2, embed_dim)
@@ -742,7 +739,6 @@ class SSwinTransformer(nn.Module):
             ))
         ]
         self.post_cnn = nn.Sequential(OrderedDict(post_cnn))
-        '''
         self.apply(self._init_weights)
 
 
@@ -772,7 +768,7 @@ class SSwinTransformer(nn.Module):
         attn_loss_all = 0
         H, W = self.patches_resolution[0], self.patches_resolution[1]
         B, L, C = image.shape
-        # layer_out_put = [image.transpose(1, 2).view(B, C, H, W)]
+        layer_out_put = [image.transpose(1, 2).view(B, C, H, W)]
         i_layer = 0
         # print(image.shape)
         for layer in self.layers:
@@ -784,14 +780,14 @@ class SSwinTransformer(nn.Module):
             attn_loss_all += attn_loss
             H, W = self.patches_resolution[0] // (2 ** i_layer), self.patches_resolution[1] // (2 ** i_layer)
             B, L, C = image.shape
-            # layer_out_put.append(image.transpose(1, 2).view(B, C, H, W))
+            layer_out_put.append(image.transpose(1, 2).view(B, C, H, W))
         # print(attn_loss_all, "before")
         attn_loss_all = attn_loss_all / self.num_layers
 
         image = self.norm(image)
         
         # layer
-        # layer_out_put[4] =  image.transpose(1, 2).view(B, C, H, W)  
+        layer_out_put[4] =  image.transpose(1, 2).view(B, C, H, W)  
         
         B, L, C = image.shape
         H, W = self.patches_resolution[0] // (2 ** (self.num_layers -1)), self.patches_resolution[1] // (2 ** (self.num_layers -1))
@@ -801,14 +797,14 @@ class SSwinTransformer(nn.Module):
         # image = self.post_cnn(image)
         # print("looking for shape", B, H, W, C)
         # return image.permute(0,3,1,2), attn_loss_all, layer_out_put       
-        # return image, attn_loss_all, layer_out_put
-        return image, attn_loss_all
+        return image, attn_loss_all, layer_out_put
+        # return image, attn_loss_all
 
 
     def forward(self, image, saliency_gt):
-        # feature, attn_loss, source = self.forward_features(image, saliency_gt)
+        feature, attn_loss, source = self.forward_features(image, saliency_gt)
         # print("imageshape", image.shape, saliency_gt.shape)
-        feature, attn_loss = self.forward_features(image, saliency_gt)
+        # feature, attn_loss = self.forward_features(image, saliency_gt)
         # print(attn_loss.shape)
         sal = self.salhead(feature)
 
@@ -848,10 +844,10 @@ class SSwinTransformer(nn.Module):
         refine_sal_feature = torch.mul((1 + y_refine), feature)
         
         sal = self.salhead(refine_sal_feature)
-        # return sal, attn_loss, y.permute(0, 2, 3, 1)
+        return sal, attn_loss, y.permute(0, 2, 3, 1)
         # return sal, y.permute(0, 2, 3, 1)
         # print(sal.shape, attn_loss,"in model")
         # return sal, attn_loss
-        return sal, attn_loss
+        # return sal, attn_loss
 
 
