@@ -330,7 +330,7 @@ def validate(config, data_loader, model):
             ret_score_text = imgproc.cvt2HeatmapImg(render_img)
             # output, attn_loss = model(images, target)
             # output = model(images, target)
-            image=cv2.imread("/home/your_path/experiment/EC/swin-transformer/ECdata/ALLSTIMULI/"+str(idx_name) + '.jpg')
+            image=cv2.imread("/home/liyifei/experiment/EC/swin-transformer/ECdata/ALLSTIMULI/"+str(idx_name) + '.jpg')
             image=cv2.resize(image,(896,896))
             img = np.array(images)
             boxes = polys
@@ -340,11 +340,11 @@ def validate(config, data_loader, model):
             # result directory
             # res_file = '/temp_disk2/leise/ali/CRAFT-Reimplementation-master/data/result1/txt/' + "res_" + filename + '.txt'
             # res_img_file = dirname + "res_" + filename + '.jpg'
-            if not os.path.exists('/home/your_path/experiment/EC/swin-transformer/output/ans/ocr/box/'):
-                os.makedirs('/home/your_path/experiment/EC/swin-transformer/output/ans/ocr/box/')
-                os.makedirs('/home/your_path/experiment/EC/swin-transformer/output/ans/ocr/anchor/')
-            res_img_file = r'/home/your_path/experiment/EC/swin-transformer/output/ans/ocr/box/' + str(idx_name) + '.jpg'
-            res_file = r'/home/your_path/experiment/EC/swin-transformer/output/ans/ocr/anchor/' + str(idx_name) + '.txt'
+            if not os.path.exists('/home/liyifei/experiment/EC/swin-transformer/output/ans/ocr/box/'):
+                os.makedirs('/home/liyifei/experiment/EC/swin-transformer/output/ans/ocr/box/')
+                os.makedirs('/home/liyifei/experiment/EC/swin-transformer/output/ans/ocr/anchor/')
+            res_img_file = r'/home/liyifei/experiment/EC/swin-transformer/output/ans/ocr/box/' + str(idx_name) + '.jpg'
+            res_file = r'/home/liyifei/experiment/EC/swin-transformer/output/ans/ocr/anchor/' + str(idx_name) + '.txt'
             # if not os.path.isdir(dirname):
             # os.mkdir(dirname)
 

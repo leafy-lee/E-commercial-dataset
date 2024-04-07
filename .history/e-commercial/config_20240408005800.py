@@ -50,7 +50,7 @@ _C.MODEL.DROP_PATH_RATE = 0.1
 # Label Smoothing
 _C.MODEL.LABEL_SMOOTHING = 0.1
 
-_C.MODEL.FINETUNE = 'your_path/swin_tiny_patch4_window7_224/default/ckpt_epoch_49.pth'
+_C.MODEL.FINETUNE = '/mnt/disk10T/your_path/CVPR2022EC/output/sal+ocr/swin_tiny_patch4_window7_224/default/ckpt_epoch_49.pth'
 
 # Swin Transformer parameters
 _C.MODEL.SWIN = CN()
